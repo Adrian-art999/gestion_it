@@ -1,0 +1,297 @@
+/* Mejoras UX/UI Profesionales Sutiles - Material Design Principles */
+
+/* Mejoras de micro-interacciones */
+.btn-save, .btn-cancel, .btn-reporte-pdf {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.btn-save:hover, .btn-cancel:hover, .btn-reporte-pdf:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.btn-save:active, .btn-cancel:active, .btn-reporte-pdf:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Mejoras en inputs y formularios */
+.modal-content select:focus,
+.modal-content input:focus,
+.modal-content textarea:focus {
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    border-color: #1a73e8;
+}
+
+/* Mejoras en tabla */
+.tabla-container {
+    border-radius: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 500px;
+    min-height: 250px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    padding-bottom: 120px; /* Suficiente para el menú de 3 puntos en la última fila */
+    min-height: 300px;
+}
+
+.tabla-container table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Anchos fijos de columnas para evitar desbordamiento */
+.tabla-container th:nth-child(1),
+.tabla-container td:nth-child(1) { width: 22%; }  /* Responsable(s) */
+.tabla-container th:nth-child(2),
+.tabla-container td:nth-child(2) { width: 18%; }  /* Área */
+.tabla-container th:nth-child(3),
+.tabla-container td:nth-child(3) { width: 32%; }  /* Descripción */
+.tabla-container th:nth-child(4),
+.tabla-container td:nth-child(4) { width: 14%; }  /* Estado */
+/* Columna Opciones ya tiene width:86px en header.php */
+
+.tabla-container thead {
+    background: linear-gradient(to bottom, #f8f9fa, #e8eaed);
+}
+
+.tabla-container tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.tabla-container tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Mejoras en estado pills */
+.status-pill {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.paginacion-actividades {
+    height: 60px !important;
+    min-height: 60px !important;
+    padding: 0 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}
+
+.pagina-cuadro {
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.pagina-cuadro:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Mejoras en modales */
+.modal {
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Mejoras en dropdown */
+.dropdown-opciones {
+    animation: dropdownSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mejoras en botones de acción */
+.btn-accion-actividad-finalizar {
+    transition: all 0.2s ease;
+}
+
+.btn-accion-actividad-finalizar:hover {
+    transform: scale(1.1);
+}
+
+.btn-responsables-toggle,
+.btn-descripcion-expandir {
+    transition: all 0.2s ease;
+}
+
+.btn-responsables-toggle:hover,
+.btn-descripcion-expandir:hover {
+    background-color: #d2e3fc;
+    transform: translateY(-1px);
+}
+
+/* Mejoras en popover */
+.responsables-popover {
+    animation: popoverSlideIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes popoverSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mejoras en búsqueda */
+.dashboard-search-input {
+    transition: all 0.2s ease;
+}
+
+.dashboard-search-input:focus {
+    background: #fff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dashboard-filter-select {
+    transition: all 0.2s ease;
+}
+
+.dashboard-filter-select:focus {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Mejoras en panel lista */
+.panel-lista {
+    animation: panelSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes panelSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Mejoras de accesibilidad */
+.btn-save:focus,
+.btn-cancel:focus,
+.btn-reporte-pdf:focus,
+.pagina-cuadro:focus {
+    outline: 2px solid #1a73e8;
+    outline-offset: 2px;
+}
+
+/* Mejoras en loading states */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1a73e8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mejoras responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 2vh auto;
+        padding: 24px;
+        border-radius: 16px;
+    }
+    
+    .panel-lista {
+        width: 95%;
+        margin: 16px auto;
+        padding: 20px;
+        border-radius: 16px;
+    }
+    
+    .dashboard-toolbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .dashboard-search {
+        width: 100%;
+    }
+    
+    .dashboard-filter-select {
+        width: 100%;
+    }
+}
+
+/* Mejoras de contraste y legibilidad */
+.modal-content label {
+    color: #202124;
+    font-weight: 500;
+}
+
+.dashboard-greeting {
+    color: #202124;
+}
+
+/* Mejoras sutiles en colores */
+.status-progreso {
+    background: #fef7e0;
+    color: #b06000;
+    border: 1px solid #f3e5ab;
+}
+
+.status-finalizada {
+    background: #e6f4ea;
+    color: #1e8e3e;
+    border: 1px solid #c8e6c9;
+}
+
+.status-cancelada {
+    background: #fce8e6;
+    color: #d93025;
+    border: 1px solid #f9c2c2;
+}
