@@ -1,8 +1,11 @@
 <?php
 session_start();
 require_once '../includes/db.php';
+<<<<<<< HEAD
 require_once '../includes/permisos.php';
 require_once '../includes/functions.php';
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 
 header('Content-Type: application/json');
 
@@ -12,12 +15,15 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+<<<<<<< HEAD
 if (!tienePermiso('usuarios_registrar')) {
     http_response_code(403);
     echo json_encode(['ok' => false, 'message' => 'No tienes permiso para esta acción']);
     exit;
 }
 
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['ok' => false, 'message' => 'Método no permitido']);
@@ -166,7 +172,11 @@ try {
 
 // ── Insertar usuario y datos de recuperación en transacción ───────────────
 $sql = "INSERT INTO usuarios (nombre_completo, formacion, correo, telefono, username, password, rol)
+<<<<<<< HEAD
         VALUES (?, ?, ?, ?, ?, ?, 'tecnico')";
+=======
+        VALUES (?, ?, ?, ?, ?, ?, 'admin')";
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 try {
     $conn->begin_transaction();
 
@@ -217,7 +227,10 @@ try {
     exit;
 }
 
+<<<<<<< HEAD
 registrar_log($conn, (int) $_SESSION['user_id'], "Registró al usuario ID {$idUsuario}");
 $_SESSION['toast'] = ['tipo' => 'success', 'mensaje' => '¡Usuario guardado!'];
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 echo json_encode(['ok' => true, 'message' => 'Usuario registrado correctamente']);
 ?>

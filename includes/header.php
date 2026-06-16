@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+<<<<<<< HEAD
 require_once __DIR__ . '/permisos.php';
 
 $nombre_usuario = $_SESSION['nombre'] ?? 'Usuario';
@@ -29,6 +30,14 @@ if (!empty($_SESSION['es_superadmin'])) {
         array_fill(0, count(function_exists('listaPermisos') ? listaPermisos() : []), true)
     );
 }
+=======
+$nombre_usuario = $_SESSION['nombre'] ?? 'Usuario';
+$rol_usuario = $_SESSION['rol'] ?? 'tecnico';
+// $es_gladys_admin comes from config.php usually, let's make sure it's defined
+if (!isset($es_admin)) {
+    $es_admin = function_exists('esAdmin') ? esAdmin($nombre_usuario, $rol_usuario) : false;
+}
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,6 +46,7 @@ if (!empty($_SESSION['es_superadmin'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System O.S.T.I</title>
     <script>
+<<<<<<< HEAD
         window.ES_ADMIN = <?php echo $es_admin ? 'true' : 'false'; ?>;
         window.TOAST_DATA = <?php echo json_encode($toast_data); ?>;
         window.PERMISOS = <?php echo json_encode($permisos_js); ?>;
@@ -44,6 +54,12 @@ if (!empty($_SESSION['es_superadmin'])) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+=======
+        
+        window.ES_ADMIN = <?php echo $es_admin ? 'true' : 'false'; ?>;
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     <style>
         /* RESET Y BASE */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
@@ -82,6 +98,7 @@ if (!empty($_SESSION['es_superadmin'])) {
         .toolbar { padding: 0 20px 8px 20px; display: flex; gap: 12px; align-items: center; }
         .search-container { position: relative; width: 250px; }
         .search-container span { position: absolute; left: 15px; top: 10px; color: #5f6368; }
+<<<<<<< HEAD
         .search-container input { width: 100%; padding: 10px 20px 10px 46px; border-radius: 24px !important; border: 1px solid #dadce0; background: #f1f3f4; outline: none; }
         .filter-select { flex-grow: 1; padding: 10px 20px; border-radius: 24px !important; border: 1px solid #dadce0; background: white; cursor: pointer; }
 
@@ -117,6 +134,20 @@ if (!empty($_SESSION['es_superadmin'])) {
 
         .cell-area { }
         .cell-description { }
+=======
+        .search-container input { width: 100%; padding: 10px 15px 10px 45px; border-radius: 20px; border: 1px solid #dadce0; background: #f1f3f4; outline: none; }
+        .filter-select { flex-grow: 1; padding: 10px 15px; border-radius: 20px; border: 1px solid #dadce0; background: white; cursor: pointer; }
+
+        /* TABLA */
+        .tabla-container { padding: 0 20px; width: 100%; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px 10px; font-size: 13px; color: #3c4043; border-bottom: 2px solid #f1f3f4; }
+        td { padding: 15px 10px; font-size: 14px; border-bottom: 1px solid #f1f3f4; }
+        tbody tr { transition: background-color 0.18s ease; }
+        tbody tr:hover { background: #f8fafd; }
+        .cell-area { width: 160px; min-width: 140px; max-width: 200px; }
+        .cell-description { max-width: 340px; }
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         .cell-truncate {
             display: inline-block;
             max-width: calc(100% - 38px);
@@ -126,12 +157,19 @@ if (!empty($_SESSION['es_superadmin'])) {
             vertical-align: middle;
         }
 
+<<<<<<< HEAD
         /* Columna de duración */
         .cell-duracion { }
         .duracion-texto { font-size: 12px; color: #5f6368; font-weight: 500; }
 
         /* Columna de acciones y menú de 3 puntos */
         th:last-child, td:last-child {
+=======
+        /* Columna de acciones y menú de 3 puntos */
+        th:last-child, td:last-child {
+            width: 86px;
+            min-width: 86px;
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             text-align: right;
             position: relative;
             overflow: visible;
@@ -250,7 +288,11 @@ if (!empty($_SESSION['es_superadmin'])) {
         .btn-cancel { background: #f1f3f4; color: #3c4043; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 600; cursor: pointer; }
 
         /* STATUS PILLS */
+<<<<<<< HEAD
         .status-pill { padding: 4px 10px !important; border-radius: 15px; font-size: 11px; font-weight: 500; white-space: nowrap !important; display: inline-flex !important; align-items: center; justify-content: center; }
+=======
+        .status-pill { padding: 4px 12px; border-radius: 15px; font-size: 12px; font-weight: 500; }
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         .status-progreso { background: #fff4e5; color: #b06000; }
         .status-finalizada { background: #e6f4ea; color: #1e8e3e; }
         .status-cancelada { background: #fce8e6; color: #d93025; }
@@ -304,6 +346,7 @@ if (!empty($_SESSION['es_superadmin'])) {
             padding: 34px 16px !important;
             vertical-align: middle;
         }
+<<<<<<< HEAD
         .dashboard-header-top {
             padding: 10px 20px 0 20px;
             display: flex;
@@ -325,6 +368,12 @@ if (!empty($_SESSION['es_superadmin'])) {
         }
         .dashboard-header-top .btn-reporte-pdf {
             flex-shrink: 0;
+=======
+        .dashboard-top-actions {
+            padding: 8px 20px 0 20px;
+            display: flex;
+            justify-content: flex-end;
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         }
         .btn-reporte-pdf {
             border: 1px solid #dadce0;
@@ -340,12 +389,17 @@ if (!empty($_SESSION['es_superadmin'])) {
         }
         .btn-reporte-pdf:hover { border-color: #1a73e8; color: #1a73e8; background: #f8fbff; }
         .dashboard-greeting {
+<<<<<<< HEAD
+=======
+            padding: 3px 20px 2px 20px;
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             color: #3c4043;
             font-size: 17px;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 6px;
+<<<<<<< HEAD
         }
         .dashboard-toolbar {
             padding: 8px 20px 10px 20px;
@@ -370,6 +424,18 @@ if (!empty($_SESSION['es_superadmin'])) {
         .dashboard-search .material-icons { position: absolute; left: 12px; color: #5f6368; font-size: 19px; }
         .dashboard-search-input { padding: 10px 20px 10px 44px !important; background: #f1f3f4 !important; border: none !important; height: 44px; border-radius: 24px !important; }
         .dashboard-filter-select { width: 190px; height: 44px; background: #f1f3f4; border: none; border-radius: 24px !important; padding: 0 20px; }
+=======
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .dashboard-toolbar { padding: 2px 20px 6px 20px; }
+        .dashboard-search { flex-grow: 1; position: relative; display: flex; align-items: center; width: auto; }
+        .dashboard-search .material-icons { position: absolute; left: 12px; color: #5f6368; font-size: 19px; }
+        .dashboard-search-input { padding-left: 40px !important; background: #f1f3f4 !important; border: none !important; height: 42px; border-radius: 10px !important; }
+        .dashboard-filter-select { width: 190px; height: 42px; background: #f1f3f4; border: none; border-radius: 10px; }
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 
         /* Panel reutilizable para listas flotantes */
         .panel-lista {
@@ -407,6 +473,7 @@ if (!empty($_SESSION['es_superadmin'])) {
     </style>
     <link rel="stylesheet" href="assets/css/professional-ux.css">
     <link rel="stylesheet" href="assets/css/glassmorphism-dashboard.css">
+<<<<<<< HEAD
     <style>
         /* ── Toast notifications ── */
         .osti-toast-container {
@@ -557,4 +624,8 @@ if (!empty($_SESSION['es_superadmin'])) {
     }
 })();
 </script>
+=======
+</head>
+<body>
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 <div id="popover" style="display:none; position:absolute; background:#323336; color:white; padding:10px; border-radius:8px; z-index:2000; font-size: 13px;"></div>

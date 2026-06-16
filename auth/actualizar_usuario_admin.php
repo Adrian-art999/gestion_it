@@ -1,8 +1,11 @@
 <?php
 session_start();
 require_once '../includes/db.php';
+<<<<<<< HEAD
 require_once '../includes/permisos.php';
 require_once '../includes/functions.php';
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 
 header('Content-Type: application/json');
 
@@ -12,12 +15,15 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+<<<<<<< HEAD
 if (!tienePermiso('usuarios_editar')) {
     http_response_code(403);
     echo json_encode(['ok' => false, 'message' => 'No tienes permiso para esta acción']);
     exit;
 }
 
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['ok' => false, 'message' => 'Método no permitido']);
@@ -37,12 +43,15 @@ if ($id <= 0 || $nombre === '' || $apellido === '' || $username === '') {
     exit;
 }
 
+<<<<<<< HEAD
 // Validar que nombre y apellido no contengan números
 if (preg_match('/\d/', $nombre) || preg_match('/\d/', $apellido)) {
     echo json_encode(['ok' => false, 'message' => 'El nombre y apellido no pueden contener números']);
     exit;
 }
 
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 $sqlDupUser = "SELECT id FROM usuarios WHERE username = ? AND id <> ? LIMIT 1";
 $stmtDupUser = $conn->prepare($sqlDupUser);
 $stmtDupUser->bind_param('si', $username, $id);
@@ -78,7 +87,10 @@ if (!$stmt->execute()) {
     exit;
 }
 
+<<<<<<< HEAD
 registrar_log($conn, (int) $_SESSION['user_id'], "Actualizó al usuario ID {$id}");
 $_SESSION['toast'] = ['tipo' => 'success', 'mensaje' => '¡Usuario guardado!'];
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 echo json_encode(['ok' => true, 'message' => 'Usuario actualizado correctamente']);
 ?>

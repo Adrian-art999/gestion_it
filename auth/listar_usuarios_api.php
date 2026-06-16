@@ -1,12 +1,15 @@
 <?php
 include '../includes/config.php';
 
+<<<<<<< HEAD
 if (!tienePermiso('usuarios_listar')) {
     http_response_code(403);
     echo json_encode(['ok' => false, 'message' => 'No tienes permiso para esta acción']);
     exit;
 }
 
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 $busqueda = isset($_GET['busqueda']) ? trim($_GET['busqueda']) : '';
 $sql = "SELECT id,
                nombre_completo,

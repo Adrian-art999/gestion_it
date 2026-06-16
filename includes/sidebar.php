@@ -62,11 +62,14 @@
         <span class="material-icons">badge</span> Lista de Usuarios
     </div>
 
+<<<<<<< HEAD
     <div class="menu-label">SISTEMA</div>
     <div class="menu-item" onclick="abrirBitacora()" style="cursor:pointer;" data-accion="bitacora">
         <span class="material-icons">history</span> Bitácora
     </div>
 
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid #f1f3f4;">
         <a href="auth/logout.php" class="menu-item" style="color: #d93025;">
             <span class="material-icons" style="color: #d93025;">logout</span> Cerrar Sesión

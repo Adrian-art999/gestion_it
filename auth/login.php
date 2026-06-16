@@ -3,7 +3,10 @@ session_start();
 include '../includes/db.php';
 include '../includes/db_schema.php';
 include '../includes/security.php';
+<<<<<<< HEAD
 include '../includes/permisos.php';
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 asegurarTablaRecuperacionUsuarios($conn);
 
 $error = '';
@@ -28,11 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id']       = $user['id'];
             $_SESSION['nombre']        = $user['nombre_completo'] ?? $user['username'] ?? 'Usuario';
             $_SESSION['rol']           = $user['rol'] ?? 'admin';
+<<<<<<< HEAD
 
             // Asegurar columna permisos y cargar permisos del usuario
             asegurarColumnaPermisos($conn);
             cargarPermisosEnSesion($conn, (int) $user['id'], $_SESSION['nombre'], $_SESSION['rol']);
 
+=======
+            $_SESSION['es_superadmin'] = esNombreSuperAdmin($user['nombre_completo'] ?? '');
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             header('Location: ../dashboard.php');
             exit();
         } else {

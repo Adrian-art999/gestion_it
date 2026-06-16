@@ -36,6 +36,7 @@ if (!function_exists('normalizarEstadosActividades')) {
         $stmt->execute();
     }
 }
+<<<<<<< HEAD
 
 if (!function_exists('asegurarColumnaFechaFin')) {
     function asegurarColumnaFechaFin(mysqli $conn): void
@@ -130,4 +131,6 @@ if (!function_exists('formatearDuracion')) {
         }
     }
 }
+=======
+>>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 ?>
