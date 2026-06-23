@@ -3,10 +3,7 @@ session_start();
 include '../includes/db.php';
 include '../includes/db_schema.php';
 include '../includes/security.php';
-<<<<<<< HEAD
 include '../includes/permisos.php';
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 asegurarTablaRecuperacionUsuarios($conn);
 
 $error = '';
@@ -31,15 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id']       = $user['id'];
             $_SESSION['nombre']        = $user['nombre_completo'] ?? $user['username'] ?? 'Usuario';
             $_SESSION['rol']           = $user['rol'] ?? 'admin';
-<<<<<<< HEAD
-
             // Asegurar columna permisos y cargar permisos del usuario
             asegurarColumnaPermisos($conn);
             cargarPermisosEnSesion($conn, (int) $user['id'], $_SESSION['nombre'], $_SESSION['rol']);
-
-=======
-            $_SESSION['es_superadmin'] = esNombreSuperAdmin($user['nombre_completo'] ?? '');
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             header('Location: ../dashboard.php');
             exit();
         } else {
@@ -242,96 +233,239 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #5f6368; display: flex; align-items: center;
         }
         .password-hint { font-size: 12px; color: #5f6368; margin-top: 4px; }
-        /* ── Mega Menú de Documentación ── */
-        .doc-menu-btn {
+
+        /* ── Mega Menú Documentación (estilo Discord) ── */
+        .doc-wrapper {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            color: #0d47a1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: all .3s;
+            top: 18px;
+            right: 22px;
+            z-index: 9999;
+        }
+        .doc-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            backdrop-filter: blur(6px);
+            transition: background 0.2s, transform 0.15s;
         }
-        .doc-menu-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        .doc-btn:hover { background: rgba(0,0,0,0.7); transform: scale(1.05); }
+        .doc-btn .material-icons { font-size: 22px; }
+        .doc-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 860px;
+            background: #1e1f22;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 14px 35px rgba(0,0,0,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
         }
-        .mega-menu {
+        .doc-wrapper:hover .doc-dropdown,
+        .doc-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .doc-col-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #949ba4;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2b2d31;
+        }
+        .doc-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: #dbdee1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
+        .doc-card:hover { background: #2b2d31; }
+        .doc-card .material-icons {
+            font-size: 20px;
+            color: #5865f2;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+        .doc-card-text { display: flex; flex-direction: column; min-width: 0; }
+        .doc-card-title {
+            font-weight: 500;
+            color: #f2f3f5;
+            font-size: 13px;
+        }
+        .doc-card-desc {
+            font-size: 11px;
+            color: #949ba4;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+        /* ── Modal flotante personalizado ── */
+        .doc-modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(30px);
-            padding: 60px 80px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            animation: slideDown 0.4s ease-out;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
         }
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .doc-modal-overlay.show { display: flex; }
+        .doc-modal {
+            background: #1e1f22;
+            border-radius: 20px;
+            width: 560px;
+            max-width: 92vw;
+            max-height: 80vh;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            animation: docModalIn 0.2s ease;
         }
-        .mega-menu.active { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto; }
-        .mega-menu-column h4 {
-            color: #1a73e8;
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #1a73e8;
-            padding-bottom: 10px;
+        @keyframes docModalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(8px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .mega-menu-column p {
-            color: #3c4043;
-            font-size: 13px;
+        .doc-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px 0;
+        }
+        .doc-modal-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #f2f3f5;
+        }
+        .doc-modal-header h3 .material-icons { font-size: 24px; color: #5865f2; }
+        .doc-modal-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: #949ba4;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .doc-modal-close:hover { background: #2b2d31; color: #fff; }
+        .doc-modal-body {
+            padding: 16px 24px 24px;
+            overflow-y: auto;
+            font-size: 14px;
             line-height: 1.7;
-            margin-bottom: 14px;
+            color: #b5bac1;
         }
-        .mega-menu-column strong { color: #1a73e8; }
+        .doc-modal-body strong { color: #f2f3f5; }
+        .doc-modal-body ul, .doc-modal-body ol { padding-left: 20px; margin: 8px 0; }
+        .doc-modal-body li { margin-bottom: 8px; }
     </style>
 </head>
 <body>
-    <button class="doc-menu-btn" id="docMenuBtn">
-        Documentación ☰
-    </button>
-    <div class="mega-menu" id="megaMenu">
-        <div class="mega-menu-column">
-            <h4>Acceso</h4>
-            <p>Puedes iniciar sesión usando tu <strong>Username</strong> o tu <strong>Gmail</strong> registrado en el sistema.</p>
-            <p>Si olvidaste tu contraseña, utiliza el sistema de recuperación basado en <strong>preguntas de seguridad</strong> predefinidas.</p>
-            <p>Para restablecer tu contraseña debes responder 2/3 Respuestas Correctas</p>
-        </div>
-        <div class="mega-menu-column">
-            <h4>Operaciones</h4>
-            <p>El sistema implementa operaciones <strong>CRUD</strong> completas para empleados, usuarios y actividades.</p>
-            <p>Se mantiene una <strong>democracia de permisos</strong>: todos los usuarios pueden editar y eliminar registros.</p>
-            <p>Los campos vacíos se muestran como <strong>N/D</strong> (No Disponible) para mantener la integridad de datos.</p>
-        </div>
-        <div class="mega-menu-column">
-            <h4>Soporte</h4>
-            <p><strong>O.S.T.I.</strong> significa <em>Operaciones de Sistemas de Tecnología de Información</em>.</p>
-            <p>Sistema de gestión para el departamento técnico de la Secretaría de Salud.</p>
-            <p><strong>Versión 1.5</strong> - Actualizado con interfaz moderna y mejoras de seguridad.</p>
-        </div>
-        <div class="mega-menu-column">
-            <h4>Creación</h4>
-            <p><strong>Frontend:</strong> HTML5, CSS3, JavaScript, Material Icons.</p>
-            <p><strong>Backend:</strong> PHP 8, MySQLi, Prepared Statements.</p>
-            <p><strong>Seguridad:</strong> Password hashing, Session management, SQL injection prevention.</p>
+    <div class="doc-wrapper">
+        <button class="doc-btn" id="docBtn" aria-label="Documentación">
+            <span class="material-icons">menu</span>
+        </button>
+        <div class="doc-dropdown" id="docDropdown">
+            <div class="doc-grid">
+                <div class="doc-col">
+                    <div class="doc-col-title">Acceso y Soporte</div>
+                    <div class="doc-card" data-action="recuperar-acceso">
+                        <span class="material-icons">lock_reset</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Recuperar Acceso</span>
+                            <span class="doc-card-desc">Guía para restablecer tu cuenta mediante tus 2/3 preguntas de seguridad del sistema.</span>
+                        </span>
+                    </div>
+                    <div class="doc-card" data-action="dudas-comunes">
+                        <span class="material-icons">help_outline</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Dudas Comunes</span>
+                            <span class="doc-card-desc">Preguntas frecuentes sobre el uso del dashboard de actividades.</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="doc-col">
+                    <div class="doc-col-title">Permisos del Sistema</div>
+                    <div class="doc-card" data-action="super-usuario">
+                        <span class="material-icons">admin_panel_settings</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Super Usuario</span>
+                            <span class="doc-card-desc">Perfil con acceso total al sistema: gestión de usuarios, roles, reportes y configuración general.</span>
+                        </span>
+                    </div>
+                    <div class="doc-card" data-action="manual-usuario">
+                        <span class="material-icons">description</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Manual de Usuario</span>
+                            <span class="doc-card-desc">Guía completa de usuario para el registro correcto de tareas.</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="doc-col">
+                    <div class="doc-col-title">Especificaciones</div>
+                    <div class="doc-card" data-action="como-esta-hecho">
+                        <span class="material-icons">code</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Cómo está hecho</span>
+                            <span class="doc-card-desc">Conoce el sistema base construido sobre arquitectura MVC en PHP nativo.</span>
+                        </span>
+                    </div>
+                    <div class="doc-card" data-action="componentes-core">
+                        <span class="material-icons">integration_instructions</span>
+                        <span class="doc-card-text">
+                            <span class="doc-card-title">Componentes Core</span>
+                            <span class="doc-card-desc">Integración moderna con MySQL, SweetAlert2 y motor de reportes Dompdf.</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div class="doc-modal-overlay" id="docModalOverlay">
+        <div class="doc-modal">
+            <div class="doc-modal-header">
+                <h3 id="docModalTitle"><span class="material-icons">info</span> Título</h3>
+                <button class="doc-modal-close" id="docModalClose" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="doc-modal-body" id="docModalBody"></div>
+        </div>
+    </div>
+
     <div class="login-box">
         <div class="logo">
             <span class="material-icons">dns</span> Sistema O.S.T.I
@@ -425,19 +559,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script>
     (function () {
-        // Mega Menú toggle
-        var docMenuBtn = document.getElementById('docMenuBtn');
-        var megaMenu = document.getElementById('megaMenu');
-        docMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            megaMenu.classList.toggle('active');
-        });
-        document.addEventListener('click', function(e) {
-            if (!megaMenu.contains(e.target) && !docMenuBtn.contains(e.target)) {
-                megaMenu.classList.remove('active');
-            }
-        });
-
         var overlay   = document.getElementById('recOverlay');
         var msg       = document.getElementById('recMsg');
         var pasos     = ['recPaso1', 'recPaso2', 'recPaso3'];
@@ -555,6 +676,133 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } catch (err) {
                 mostrarMsg('Error de conexión. Intenta de nuevo.');
             } finally { this.disabled = false; }
+        });
+    })();
+
+    /* ── Documentación: toggle + modal flotante ── */
+    (function() {
+        var btn = document.getElementById('docBtn');
+        var dd  = document.getElementById('docDropdown');
+        var overlay = document.getElementById('docModalOverlay');
+        var mTitle  = document.getElementById('docModalTitle');
+        var mBody   = document.getElementById('docModalBody');
+        var mClose  = document.getElementById('docModalClose');
+
+        if (btn && dd) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dd.classList.toggle('open');
+            });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.doc-wrapper')) dd.classList.remove('open');
+            });
+        }
+
+        /* ── Contenido de cada sección ── */
+        var secciones = {
+            'recuperar-acceso': {
+                icono: 'lock_reset',
+                titulo: 'Recuperar Acceso',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Guía de restablecimiento de credenciales</p>' +
+                      '<ol>' +
+                      '<li><strong>Solicitud:</strong> El administrador inicia el proceso desde el panel de gestión de usuarios.</li>' +
+                      '<li><strong>Verificación:</strong> El sistema te presentará <strong>2 de tus 3 preguntas de seguridad</strong> guardadas en tu perfil.</li>' +
+                      '<li><strong>Respuestas:</strong> Debes contestar correctamente. Tras 3 intentos fallidos el proceso se bloquea por seguridad.</li>' +
+                      '<li><strong>Nueva contraseña:</strong> Una vez verificada tu identidad, podrás establecer una nueva clave de acceso.</li>' +
+                      '<li><strong>Inicio de sesión:</strong> Ingresa con tu nueva contraseña. Se recomienda actualizarla cada 90 días.</li>' +
+                      '</ol>'
+            },
+            'dudas-comunes': {
+                icono: 'help_outline',
+                titulo: 'Dudas Comunes',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Preguntas frecuentes del sistema</p>' +
+                      '<ul>' +
+                      '<li><strong>¿Cómo registro una actividad?</strong> En el dashboard principal, haz clic en "Nueva Actividad". Completa los campos obligatorios y guarda.</li>' +
+                      '<li><strong>¿Puedo editar una actividad finalizada?</strong> Sí, si tienes permisos. Usa el icono de lápiz en la fila correspondiente.</li>' +
+                      '<li><strong>¿Qué es "En Progreso"?</strong> Es el estado inicial de una actividad recién creada que aún no se ha completado.</li>' +
+                      '<li><strong>¿Cómo generar un reporte PDF?</strong> Ve a la sección Reportes, selecciona un rango de fechas y haz clic en "Generar PDF".</li>' +
+                      '<li><strong>¿Quién puede ver la bitácora?</strong> Solo los usuarios con el permiso <em>bitacora</em> activado en su rol.</li>' +
+                      '</ul>'
+            },
+            'super-usuario': {
+                icono: 'admin_panel_settings',
+                titulo: 'Super Usuario',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Perfil con acceso total al sistema</p>' +
+                      '<p>El Super Usuario tiene control completo sobre todas las funcionalidades del sistema:</p>' +
+                      '<ul>' +
+                      '<li><strong>Gestión de usuarios:</strong> Crear, editar, desactivar y asignar roles a cualquier cuenta del sistema.</li>' +
+                      '<li><strong>Asignación de roles:</strong> Puede otorgar los roles de Superadmin, Administrador o Usuario estándar.</li>' +
+                      '<li><strong>Permisos granulares:</strong> Activa o restringe módulos como bitácora, reportes, usuarios o empleados para cada perfil.</li>' +
+                      '<li><strong>Vistas personalizadas:</strong> Define qué secciones del dashboard son visibles para cada tipo de usuario.</li>' +
+                      '<li><strong>Historial completo:</strong> Acceso a la bitácora del sistema con todas las acciones registradas.</li>' +
+                      '</ul>'
+            },
+            'manual-usuario': {
+                icono: 'description',
+                titulo: 'Manual de Usuario',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Guía completa de uso</p>' +
+                      '<ul>' +
+                      '<li><strong>Registro de actividades:</strong> Creación, edición, finalización y cancelación de tareas del día a día.</li>' +
+                      '<li><strong>Gestión de empleados:</strong> Alta, baja y modificación de datos del personal operativo.</li>' +
+                      '<li><strong>Reportes PDF:</strong> Generación de documentos con filtros por fechas y áreas, usando el motor Dompdf.</li>' +
+                      '<li><strong>Bitácora del sistema:</strong> Consulta el historial completo de acciones realizadas por todos los usuarios.</li>' +
+                      '<li><strong>Seguridad:</strong> Las contraseñas se almacenan con hash y el acceso se controla mediante sesiones y permisos.</li>' +
+                      '</ul>'
+            },
+            'como-esta-hecho': {
+                icono: 'code',
+                titulo: 'Cómo está hecho',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Arquitectura del sistema O.S.T.I</p>' +
+                      '<ul>' +
+                      '<li><strong>Frontend:</strong> HTML5 semántico con CSS3 vanilla, diseño responsivo y Material Icons de Google para la iconografía.</li>' +
+                      '<li><strong>Backend:</strong> PHP 8.x nativo siguiendo el patrón MVC (Modelo-Vista-Controlador) sin dependencia de frameworks pesados.</li>' +
+                      '<li><strong>Base de datos:</strong> MySQL con motor InnoDB, consultas parametrizadas (Prepared Statements) para prevenir inyección SQL.</li>' +
+                      '<li><strong>Interactividad:</strong> SweetAlert2 para modales y notificaciones toast; JavaScript vanilla para el resto de la lógica cliente.</li>' +
+                      '<li><strong>Reportes:</strong> Dompdf convierte HTML+CSS a PDF con soporte UTF-8 nativo, reemplazando al antiguo FPDF.</li>' +
+                      '</ul>'
+            },
+            'componentes-core': {
+                icono: 'integration_instructions',
+                titulo: 'Componentes Core',
+                html: '<p style="color:#f2f3f5;font-weight:600;margin-bottom:10px;">Stack tecnológico principal</p>' +
+                      '<ul>' +
+                      '<li><strong>PHP 8.x:</strong> Lenguaje del backend con tipado estricto y orientación a objetos.</li>' +
+                      '<li><strong>MySQL + InnoDB:</strong> Motor de base de datos relacional con transacciones, foreign keys y integridad referencial.</li>' +
+                      '<li><strong>SweetAlert2:</strong> Librería JavaScript para diálogos modales elegantes y notificaciones toast no obstructivas.</li>' +
+                      '<li><strong>Dompdf 3.x:</strong> Librería PHP que renderiza HTML y CSS a PDF, con soporte completo de UTF-8 y fuentes incrustadas.</li>' +
+                      '<li><strong>Material Icons:</strong> Set de iconos tipográficos de Google que escalan sin pérdida de calidad.</li>' +
+                      '<li><strong>Servidor:</strong> XAMPP con Apache 2.4, desplegado en entorno Windows para desarrollo y producción local.</li>' +
+                      '</ul>'
+            }
+        };
+
+        /* ── Mostrar modal ── */
+        function mostrarSeccion(action) {
+            var s = secciones[action];
+            if (!s) return;
+            dd.classList.remove('open');
+            mTitle.innerHTML = '<span class="material-icons">'+s.icono+'</span> '+s.titulo;
+            mBody.innerHTML = s.html;
+            overlay.classList.add('show');
+        }
+
+        /* ── Cerrar modal y regresar al menú ── */
+        function cerrarModal() {
+            overlay.classList.remove('show');
+            dd.classList.add('open');
+        }
+
+        /* ── Evento en cada tarjeta ── */
+        document.querySelectorAll('.doc-card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                mostrarSeccion(this.getAttribute('data-action'));
+            });
+        });
+
+        /* ── Cerrar con X o al hacer clic fuera ── */
+        if (mClose) mClose.addEventListener('click', cerrarModal);
+        if (overlay) overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) cerrarModal();
         });
     })();
     </script>

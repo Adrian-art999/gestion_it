@@ -12,15 +12,35 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (!tienePermiso('roles_gestionar')) {
+if (!tienePermiso('super_admin')) {
     http_response_code(403);
-    echo json_encode(['ok' => false, 'message' => 'No tienes permiso para gestionar roles']);
+    echo json_encode(['ok' => false, 'message' => 'No tienes permiso para gestionar permisos del sistema']);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['ok' => false, 'message' => 'Método no permitido']);
+    exit;
+}
+
+// ── Re-autenticación: verificar contraseña del administrador activo ──
+$adminPassword = $_POST['_admin_password'] ?? '';
+if ($adminPassword === '') {
+    http_response_code(403);
+    echo json_encode(['ok' => false, 'message' => 'Debes ingresar tu contraseña para confirmar los cambios']);
+    exit;
+}
+
+$stmtAdmin = $conn->prepare("SELECT password FROM usuarios WHERE id = ? LIMIT 1");
+$stmtAdmin->bind_param('i', $_SESSION['user_id']);
+$stmtAdmin->execute();
+$adminRow = $stmtAdmin->get_result()->fetch_assoc();
+$stmtAdmin->close();
+
+if (!$adminRow || !password_verify($adminPassword, $adminRow['password'])) {
+    http_response_code(403);
+    echo json_encode(['ok' => false, 'message' => 'Contraseña incorrecta. No se guardaron los cambios.']);
     exit;
 }
 
@@ -50,7 +70,7 @@ if (!$target) {
     exit;
 }
 
-// No modificar permisos del Superadmin
+// No modificar permisos del Superadmin por nombre (Gladys)
 if (esNombreSuperAdmin($target['nombre_completo'] ?? '')) {
     http_response_code(403);
     echo json_encode(['ok' => false, 'message' => 'No puedes modificar los permisos del Superadmin']);

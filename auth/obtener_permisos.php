@@ -12,9 +12,9 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (!tienePermiso('roles_gestionar')) {
+if (!tienePermiso('super_admin')) {
     http_response_code(403);
-    echo json_encode(['ok' => false, 'message' => 'No tienes permiso para gestionar roles']);
+    echo json_encode(['ok' => false, 'message' => 'No tienes permiso para ver los permisos del sistema']);
     exit;
 }
 
@@ -43,6 +43,11 @@ $permisos = permisosDefault($user['rol'] ?? 'tecnico');
 if (!empty($user['permisos'])) {
     $decoded = json_decode($user['permisos'], true);
     if (is_array($decoded)) {
+        // Migración: mapear roles_gestionar antiguo → super_admin
+        if (isset($decoded['roles_gestionar'])) {
+            $decoded['super_admin'] = $decoded['roles_gestionar'];
+            unset($decoded['roles_gestionar']);
+        }
         $permisos = array_merge($permisos, $decoded);
     }
 }

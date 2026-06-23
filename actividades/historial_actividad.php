@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
 date_default_timezone_set('America/Caracas');
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 session_start();
 include '../includes/db.php';
 include '../includes/db_schema.php';
@@ -33,14 +30,8 @@ $res = $stmt->get_result();
 
 $items = [];
 while ($row = $res->fetch_assoc()) {
-<<<<<<< HEAD
     if (!empty($row['creado_en'])) {
         $row['creado_en'] = date('d-m-Y H:i', strtotime($row['creado_en']));
-=======
-    // Formatear fecha a DD-MM-YYYY para eliminar horas/minutos/segundos
-    if (!empty($row['creado_en'])) {
-        $row['creado_en'] = date('d-m-Y', strtotime($row['creado_en']));
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     }
     $items[] = $row;
 }

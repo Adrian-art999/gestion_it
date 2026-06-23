@@ -36,7 +36,6 @@ if (!function_exists('normalizarEstadosActividades')) {
         $stmt->execute();
     }
 }
-<<<<<<< HEAD
 
 if (!function_exists('asegurarColumnaFechaFin')) {
     function asegurarColumnaFechaFin(mysqli $conn): void
@@ -47,6 +46,15 @@ if (!function_exists('asegurarColumnaFechaFin')) {
     }
 }
 
+if (!function_exists('capitalizarNombre')) {
+    function capitalizarNombre(string $nombre): string
+    {
+        $nombre = trim($nombre);
+        $nombre = mb_strtolower($nombre, 'UTF-8');
+        return mb_convert_case($nombre, MB_CASE_TITLE, 'UTF-8');
+    }
+}
+
 if (!function_exists('asegurarTablaLogs')) {
     function asegurarTablaLogs(mysqli $conn): void
     {
@@ -54,6 +62,7 @@ if (!function_exists('asegurarTablaLogs')) {
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     usuario_id INT NOT NULL,
                     accion TEXT NOT NULL,
+                    detalle TEXT NULL,
                     fecha DATE NOT NULL,
                     INDEX idx_logs_fecha (fecha),
                     INDEX idx_logs_usuario (usuario_id),
@@ -64,15 +73,16 @@ if (!function_exists('asegurarTablaLogs')) {
 }
 
 if (!function_exists('registrar_log')) {
-    function registrar_log(mysqli $conn, int $usuario_id, string $accion): void
+    function registrar_log(mysqli $conn, int $usuario_id, string $accion, ?string $detalle = null): void
     {
         date_default_timezone_set('America/Caracas');
         asegurarTablaLogs($conn);
+        asegurarColumnaDetalleLogs($conn);
         $fecha = date('Y-m-d');
-        $sql = "INSERT INTO logs_sistema (usuario_id, accion, fecha) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO logs_sistema (usuario_id, accion, detalle, fecha) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param('iss', $usuario_id, $accion, $fecha);
+            $stmt->bind_param('isss', $usuario_id, $accion, $detalle, $fecha);
             $stmt->execute();
             $stmt->close();
         }
@@ -90,6 +100,59 @@ if (!function_exists('construir_mensaje_cambios')) {
         }
         $ultimo = array_pop($cambios);
         return implode(', ', $cambios) . " y {$ultimo} {$sufijo}";
+    }
+}
+
+if (!function_exists('formatearAccionBitacora')) {
+    function formatearAccionBitacora(string $accion, ?string $detalle = null, int $maxLen = 90): array
+    {
+        $textoBase = preg_replace('/\s*(\.\.\.)?\s*\(Ver info\)\s*$/u', '', $accion);
+        $textoBase = trim($textoBase);
+        $tieneDetalle = !empty($detalle);
+        $textoFinal = $textoBase;
+
+        if ($tieneDetalle) {
+            $detalleObj = json_decode($detalle, true);
+            if ($detalleObj && isset($detalleObj['tipo']) && $detalleObj['tipo'] === 'actividad' && isset($detalleObj['cambios']) && is_array($detalleObj['cambios'])) {
+                $totalCambios = count($detalleObj['cambios']);
+                if ($totalCambios > 2) {
+                    $parts = preg_split('/\s*,\s*|\s+y\s+/u', $textoBase);
+                    if (count($parts) >= 3) {
+                        $fragments = array_slice($parts, 0, 2);
+                        $restantes = $totalCambios - 2;
+                        $textoFinal = implode(', ', $fragments) . ' y ' . $restantes . ($restantes === 1 ? ' cambio más' : ' cambios más');
+                    }
+                }
+            }
+        }
+
+        $textoFinal = mb_strtoupper(mb_substr($textoFinal, 0, 1)) . mb_substr($textoFinal, 1);
+
+        if (mb_strlen($textoFinal) > $maxLen) {
+            $truncado = mb_substr($textoFinal, 0, $maxLen);
+            $ultimoEspacio = mb_strrpos($truncado, ' ');
+            if ($ultimoEspacio !== false) {
+                $textoFinal = mb_substr($truncado, 0, $ultimoEspacio) . '...';
+            } else {
+                $textoFinal = $truncado . '...';
+            }
+        }
+
+        return [
+            'texto' => $textoFinal,
+            'tieneDetalle' => $tieneDetalle,
+            'textoCompleto' => $textoBase,
+        ];
+    }
+}
+
+if (!function_exists('asegurarColumnaDetalleLogs')) {
+    function asegurarColumnaDetalleLogs(mysqli $conn): void
+    {
+        $r = $conn->query("SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'logs_sistema' AND COLUMN_NAME = 'detalle' LIMIT 1");
+        if ($r && $r->num_rows === 0) {
+            $conn->query("ALTER TABLE logs_sistema ADD COLUMN detalle TEXT NULL AFTER accion");
+        }
     }
 }
 
@@ -131,6 +194,4 @@ if (!function_exists('formatearDuracion')) {
         }
     }
 }
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 ?>

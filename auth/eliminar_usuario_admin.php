@@ -1,11 +1,8 @@
 <?php
 session_start();
 require_once '../includes/db.php';
-<<<<<<< HEAD
 require_once '../includes/permisos.php';
 require_once '../includes/functions.php';
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 
 header('Content-Type: application/json');
 
@@ -16,15 +13,13 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-<<<<<<< HEAD
 if (!tienePermiso('usuarios_eliminar')) {
     http_response_code(403);
     echo json_encode(['ok' => false, 'message' => 'No tienes permiso para esta acción']);
     exit;
 }
 
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['ok' => false, 'message' => 'Método no permitido']);
@@ -45,7 +40,6 @@ if ($id === (int) ($_SESSION['user_id'] ?? 0)) {
     exit;
 }
 
-<<<<<<< HEAD
 // ── Obtener nombre del usuario antes de eliminar ──────────────────────────
 $nombreEliminado = 'ID ' . $id;
 $stmtNombre = $conn->prepare("SELECT nombre_completo FROM usuarios WHERE id = ? LIMIT 1");
@@ -59,8 +53,7 @@ if ($stmtNombre) {
     $stmtNombre->close();
 }
 
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+
 // ── Ejecutar eliminación ───────────────────────────────────────────────────
 $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ? LIMIT 1");
 if (!$stmt) {
@@ -82,11 +75,14 @@ if ($stmt->affected_rows === 0) {
     exit;
 }
 
-<<<<<<< HEAD
-registrar_log($conn, (int) $_SESSION['user_id'], "Eliminó al usuario ID {$id}");
+$detalleLog = json_encode([
+    'tipo' => 'usuario',
+    'accion' => 'eliminacion',
+    'usuario_id' => $id,
+    'nombre' => $nombreEliminado
+], JSON_UNESCAPED_UNICODE);
+registrar_log($conn, (int) $_SESSION['user_id'], "Eliminó al usuario ID {$id}... (Ver info)", $detalleLog);
 
 $_SESSION['toast'] = ['tipo' => 'success', 'mensaje' => 'Usuario eliminado correctamente'];
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 echo json_encode(['ok' => true, 'message' => 'Usuario eliminado correctamente']);
 ?>

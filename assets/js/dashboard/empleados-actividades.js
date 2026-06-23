@@ -33,11 +33,7 @@
                         + '      <span class="material-icons btn-opciones" data-emp-id="' + emp.id + '" role="button" tabindex="0" aria-label="Abrir opciones" aria-expanded="false">more_vert</span>'
                         + '      <div id="menu-' + emp.id + '" class="dropdown-opciones">'
                         + '          <button type="button" class="btn-accion-editar" data-emp-id="' + emp.id + '"><span class="material-icons">edit</span> Editar</button>'
-<<<<<<< HEAD
-                        + '          <button type="button" class="btn-accion-eliminar" data-emp-id="' + emp.id + '" data-emp-nombre="' + nombreCodificado + '" style="color:#d93025"><span class="material-icons" style="color:#d93025">delete</span> Eliminar</button>'
-=======
-                        + (window.ES_ADMIN ? '          <button type="button" class="btn-accion-eliminar" data-emp-id="' + emp.id + '" data-emp-nombre="' + nombreCodificado + '" style="color:#d93025"><span class="material-icons" style="color:#d93025">delete</span> Eliminar</button>' : '')
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+                    + '          <button type="button" class="btn-accion-eliminar" data-emp-id="' + emp.id + '" data-emp-nombre="' + nombreCodificado + '" style="color:#d93025"><span class="material-icons" style="color:#d93025">delete</span> Eliminar</button>'
                         + '          <button type="button" class="btn-accion-info-empleado" data-nombre="' + nombreCodificado + '" data-apellido="' + apellidoCodificado + '" data-formacion="' + formacionCodificada + '" data-correo="' + correoCodificado + '" data-telefono="' + telefonoCodificado + '"><span class="material-icons">info</span> Info</button>'
                         + '      </div>'
                         + '  </div>'
@@ -97,7 +93,6 @@
 
     function guardarEmpleado(e) {
         e.preventDefault();
-<<<<<<< HEAD
         var form = e.target;
         var nombre = (form.querySelector('[name="nombre"]') || {}).value || '';
         var apellido = (form.querySelector('[name="apellido"]') || {}).value || '';
@@ -106,9 +101,6 @@
             return;
         }
         fetch('empleados/procesar_empleado.php', { method: 'POST', body: new FormData(form) })
-=======
-        fetch('empleados/procesar_empleado.php', { method: 'POST', body: new FormData(e.target) })
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             .then(function (res) { return res.text(); })
             .then(function (data) {
                 if (String(data).trim() === 'success') {
@@ -116,16 +108,11 @@
                     location.reload();
                     return;
                 }
-<<<<<<< HEAD
                 mostrarToastPersonalizado(data, 'error');
-=======
-                alert(data);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             });
     }
 
     function eliminarEmpleado(id, nombre) {
-<<<<<<< HEAD
         Swal.fire({
             title: '¿Eliminar a ' + nombre + '?',
             text: 'Esta acción no se puede deshacer.',
@@ -148,19 +135,6 @@
                     mostrarToastPersonalizado(data, 'error');
                 });
         });
-=======
-        if (!confirm('¿Seguro que desea eliminar a ' + nombre + '?')) return;
-        fetch('empleados/eliminar_empleado.php?id=' + encodeURIComponent(id))
-            .then(function (res) { return res.text(); })
-            .then(function (data) {
-                if (String(data).trim() === 'success') {
-                    var inputBusqueda = document.getElementById('inputBusqueda');
-                    cargarEmpleados(inputBusqueda ? inputBusqueda.value : '');
-                    return;
-                }
-                alert(data);
-            });
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     }
 
     function agregarSelect() {
@@ -173,25 +147,16 @@
             var ultimaFila = filas[filas.length - 1];
             var ultimoHidden = ultimaFila.querySelector('.emp-hidden-id');
             if (!ultimoHidden || ultimoHidden.value.trim() === '') {
-<<<<<<< HEAD
                 mostrarToastPersonalizado('Por favor, selecciona un empleado antes de agregar otro', 'error');
                 var input = ultimaFila.querySelector('.emp-search-input');
                 if (input) input.focus();
-=======
-                alert('Debe seleccionar un empleado válido antes de añadir otro.');
-                ultimaFila.querySelector('.emp-search-input').focus();
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                 return;
             }
         }
 
         // Límite de 5 responsables
         if (filas.length >= 5) {
-<<<<<<< HEAD
             mostrarToastPersonalizado('Máximo 5 responsables por actividad.', 'error');
-=======
-            alert('Máximo 5 responsables por actividad.');
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             return;
         }
 
@@ -242,7 +207,6 @@
 
     function guardarActividad(e) {
         e.preventDefault();
-<<<<<<< HEAD
 
         // Validar descripción
         var desc = (e.target.querySelector('[name="descripcion"]') || {}).value || '';
@@ -280,8 +244,6 @@
             return;
         }
 
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         fetch('actividades/procesar_actividad.php', { method: 'POST', body: new FormData(e.target) })
             .then(function (res) { return res.text(); })
             .then(function (data) {
@@ -289,11 +251,7 @@
                     location.reload();
                     return;
                 }
-<<<<<<< HEAD
                 mostrarToastPersonalizado('Error: ' + data, 'error');
-=======
-                alert('Error: ' + data);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             });
     }
 
@@ -381,7 +339,6 @@
     }
 
     function eliminarActividad(id) {
-<<<<<<< HEAD
         Swal.fire({
             title: '¿Eliminar esta actividad?',
             text: 'Esta acción no se puede deshacer.',
@@ -415,34 +372,11 @@
         var infoDesc = document.getElementById('infoActividadDescripcion');
         var infoDuracionRow = document.getElementById('infoActividadDuracionRow');
         var infoDuracion = document.getElementById('infoActividadDuracion');
-=======
-        if (!confirm('¿Seguro que deseas eliminar esta actividad?')) return;
-        fetch('actividades/eliminar_actividad.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'id=' + encodeURIComponent(id)
-        })
-            .then(function (res) { return res.text(); })
-            .then(function (data) {
-                if (String(data).trim() === 'success') {
-                    location.reload();
-                    return;
-                }
-                alert('No se pudo eliminar la actividad.');
-            });
-    }
-
-    function abrirInfoActividad(fecha, usuario, descripcion, actividadId) {
-        var infoFecha = document.getElementById('infoActividadFecha');
-        var infoUsuario = document.getElementById('infoActividadUsuario');
-        var infoDesc = document.getElementById('infoActividadDescripcion');
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         var boxHistorial = document.getElementById('infoActividadHistorial');
 
         if (infoFecha) infoFecha.innerText = fecha;
         if (infoUsuario) infoUsuario.innerText = usuario;
         if (infoDesc) infoDesc.innerText = descripcion || 'Sin descripción';
-<<<<<<< HEAD
 
         if (infoDuracionRow && infoDuracion) {
             if (duracion && duracion !== '—' && duracion !== 'En curso') {
@@ -452,8 +386,6 @@
                 infoDuracionRow.style.display = 'none';
             }
         }
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         if (boxHistorial) boxHistorial.innerHTML = 'Cargando historial...';
 
         if (actividadId) {
@@ -525,7 +457,6 @@
         
         var formData = new FormData(e.target);
         
-<<<<<<< HEAD
         var username = formData.get('username');
         if (!username || username.trim() === '') {
             Swal.fire({
@@ -542,36 +473,16 @@
         if (/\d/.test(nombre) || /\d/.test(apellido)) {
             mostrarToastPersonalizado('El nombre y apellido no pueden contener números.', 'error');
             return;
-=======
-        // Validación frontend del username
-        var username = formData.get('username');
-        if (!username || username.trim() === '') {
-            alert('El username es obligatorio y no puede estar vacío.');
-            return;
-        }
-
-        // Depuración: verificar qué datos se están enviando
-        console.log('Datos del formulario:');
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         }
         
         fetch('auth/crear_usuario_admin.php', { method: 'POST', body: formData })
             .then(function (res) { return res.json(); })
             .then(function (data) {
-<<<<<<< HEAD
                 if (data.ok) {
-=======
-                console.log('Respuesta del servidor:', data);
-                if (data.ok) {
-                    alert(data.message);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                     window.cerrarModal('modalAddUsuario');
                     location.reload();
                     return;
                 }
-<<<<<<< HEAD
                 Swal.fire({
                     icon: 'error', title: data.message || 'No se pudo registrar el usuario.',
                     confirmButtonText: 'Aceptar',
@@ -581,37 +492,23 @@
             })
             .catch(function () {
                 mostrarToastPersonalizado('Error de red al registrar usuario.', 'error');
-=======
-                alert(data.message || 'No se pudo registrar el usuario.');
-            })
-            .catch(function () {
-                alert('Error de red al registrar usuario.');
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             });
     }
 
     function filtrarTabla() {
         var input = document.getElementById('buscador');
-        var filtroEstado = document.getElementById('filtroEstado');
         var tabla = document.getElementById('miTabla');
-        if (!input || !filtroEstado || !tabla) return;
+        if (!input || !tabla) return;
 
         var texto = input.value.trim().toLowerCase();
-        var estado = filtroEstado.value;
         var filas = tabla.querySelectorAll('tbody tr[data-row-actividad]');
         var visibles = 0;
 
         filas.forEach(function (fila) {
-<<<<<<< HEAD
             var contenido = (fila.dataset.search || fila.innerText).toLowerCase();
-=======
-            var contenido = fila.innerText.toLowerCase();
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
-            var estadoFila = fila.dataset.estado || '';
-            var coincideTexto = contenido.indexOf(texto) !== -1;
-            var coincideEstado = (estado === 'todos') || (estadoFila === estado);
-            fila.style.display = (coincideTexto && coincideEstado) ? '' : 'none';
-            if (coincideTexto && coincideEstado) visibles++;
+            var coincide = contenido.indexOf(texto) !== -1;
+            fila.style.display = coincide ? '' : 'none';
+            if (coincide) visibles++;
         });
 
         var filaSin = document.getElementById('sinResultadosActividades');

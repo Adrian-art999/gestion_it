@@ -15,7 +15,8 @@
                                 SUM(CASE WHEN estado = 'En progreso' THEN 1 ELSE 0 END) AS en_progreso,
                                 SUM(CASE WHEN estado = 'Finalizada' THEN 1 ELSE 0 END) AS finalizadas,
                                 SUM(CASE WHEN estado = 'Cancelada' THEN 1 ELSE 0 END) AS canceladas
-                            FROM actividades";
+                            FROM actividades
+                            WHERE visible = 1";
         $resConteoSidebar = $conn->query($sqlConteoSidebar);
         $filaSidebar = $resConteoSidebar ? $resConteoSidebar->fetch_assoc() : [];
         $conteo_todas = (int) ($filaSidebar['todas'] ?? 0);
@@ -53,7 +54,7 @@
     </a>
 
     <div class="menu-label">PERSONAL</div>
-    <div class="menu-item" onclick="abrirModal('modalListaPersonal')" style="cursor:pointer;">
+    <div class="menu-item" onclick="abrirModal('modalListaPersonal')" style="cursor:pointer;" data-accion="lista-personal">
         <span class="material-icons">group</span> Lista de Personal
     </div>
 
@@ -62,14 +63,12 @@
         <span class="material-icons">badge</span> Lista de Usuarios
     </div>
 
-<<<<<<< HEAD
     <div class="menu-label">SISTEMA</div>
     <div class="menu-item" onclick="abrirBitacora()" style="cursor:pointer;" data-accion="bitacora">
         <span class="material-icons">history</span> Bitácora
     </div>
 
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+
     <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid #f1f3f4;">
         <a href="auth/logout.php" class="menu-item" style="color: #d93025;">
             <span class="material-icons" style="color: #d93025;">logout</span> Cerrar Sesión

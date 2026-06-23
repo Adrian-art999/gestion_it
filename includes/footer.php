@@ -66,12 +66,9 @@
         <div style="display:grid; gap:12px;">
             <div><strong>Fecha de registro:</strong> <span id="infoActividadFecha">N/D</span></div>
             <div><strong>Usuario que registró:</strong> <span id="infoActividadUsuario">N/D</span></div>
-<<<<<<< HEAD
             <div id="infoActividadDuracionRow" style="display:none;">
                 <strong>Tiempo de duración:</strong> <span id="infoActividadDuracion">—</span>
             </div>
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             <div>
                 <strong>Descripción completa:</strong>
                 <div id="infoActividadDescripcion" style="margin-top:8px; background:#f8f9fa; border:1px solid #dadce0; border-radius:8px; padding:10px; white-space: pre-wrap;"></div>
@@ -174,11 +171,7 @@
         <h2 style="display:flex; align-items:center; gap:10px; margin-bottom:16px; color:#3c4043;">
             <span class="material-icons">picture_as_pdf</span> Generar Reporte PDF
         </h2>
-<<<<<<< HEAD
         <form method="GET" action="reportes/reporte_actividades.php" target="_blank" id="formReportePDF">
-=======
-        <form method="GET" action="reportes/reporte_actividades.php" target="_blank">
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             <div class="form-grid">
                 <div>
                     <label>Fecha Inicio</label>
@@ -194,7 +187,6 @@
                 <button type="submit" class="btn-save">Generar PDF</button>
             </div>
         </form>
-<<<<<<< HEAD
         <script>
         document.getElementById('formReportePDF').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -230,8 +222,6 @@
                 });
         });
         </script>
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     </div>
 </div>
 
@@ -292,10 +282,7 @@
                 <span class="material-icons">groups</span> Lista de Personal
             </h2>
             <button onclick="cerrarModal('modalListaPersonal'); abrirModal('modalEmpleado')"
-<<<<<<< HEAD
                     data-accion="nuevo-empleado"
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                     style="display:flex; align-items:center; gap:8px; padding:10px 20px; background:linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color:white; border:none; border-radius:50px; cursor:pointer; font-size:14px; font-weight:500; box-shadow:0 2px 8px rgba(26,115,232,0.3); transition:all 0.2s ease; margin-right: 32px;">
                 <span class="material-icons" style="font-size:18px;">add</span> Nuevo empleado
             </button>
@@ -370,10 +357,7 @@
                 <span class="material-icons">badge</span> Lista de Usuarios
             </h2>
             <button onclick="cerrarModal('modalListaUsuarios'); abrirModal('modalAddUsuario')"
-<<<<<<< HEAD
                     data-accion="nuevo-usuario"
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                     style="display:flex; align-items:center; gap:8px; padding:10px 20px; background:linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color:white; border:none; border-radius:50px; cursor:pointer; font-size:14px; font-weight:500; box-shadow:0 2px 8px rgba(26,115,232,0.3); transition:all 0.2s ease; margin-right: 32px;">
                 <span class="material-icons" style="font-size:18px;">add</span> Nuevo usuario
             </button>
@@ -655,12 +639,9 @@ function cargarUsuarios(busqueda = '') {
                                             })">
                                         <span class="material-icons">edit</span> Editar
                                     </button>
-<<<<<<< HEAD
                                     <button type="button" onclick="abrirModalRoles(${u.id})">
                                         <span class="material-icons">admin_panel_settings</span> Roles
                                     </button>
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                                     <button type="button" style="color:#d93025;" onclick="eliminarUsuarioDesdeLista(${u.id})">
                                         <span class="material-icons" style="color:#d93025;">delete</span> Eliminar
                                     </button>
@@ -696,7 +677,6 @@ function abrirModalEditarUsuarioDesdeLista(usuario) {
 }
 
 function eliminarUsuarioDesdeLista(id) {
-<<<<<<< HEAD
     Swal.fire({
         title: '¿Eliminar este usuario?',
         text: 'Esta acción no se puede deshacer.',
@@ -723,23 +703,6 @@ function eliminarUsuarioDesdeLista(id) {
             })
             .catch(() => mostrarToastPersonalizado('No se pudo eliminar el usuario', 'error'));
     });
-=======
-    if (!confirm('¿Estás seguro de eliminar este usuario?')) return;
-    
-    const formData = new FormData();
-    formData.append('id', id);
-    
-    fetch('auth/eliminar_usuario_admin.php', { method: 'POST', body: formData })
-        .then(res => res.json())
-        .then(data => {
-            if (data.ok) {
-                cargarUsuarios(document.getElementById('inputBusquedaUsuarios').value);
-            } else {
-                alert(data.message || 'No se pudo eliminar el usuario');
-            }
-        })
-        .catch(() => alert('No se pudo eliminar el usuario'));
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 }
 
 function abrirInfoUsuarioDesdeServidor(id) {
@@ -794,7 +757,6 @@ function abrirInfoUsuarioDesdeServidor(id) {
 
 function guardarEdicionUsuario(e) {
     e.preventDefault();
-<<<<<<< HEAD
     var form = e.target;
     var nombre = (form.querySelector('[name="nombre"]') || {}).value || '';
     var apellido = (form.querySelector('[name="apellido"]') || {}).value || '';
@@ -803,15 +765,11 @@ function guardarEdicionUsuario(e) {
         return;
     }
     const formData = new FormData(form);
-=======
-    const formData = new FormData(e.target);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
     fetch('auth/actualizar_usuario_admin.php', { method: 'POST', body: formData })
         .then(res => res.json())
         .then(data => {
             if (data.ok) {
                 cerrarModal('modalEditarUsuarioLista');
-<<<<<<< HEAD
                 location.reload();
             } else {
                 Swal.fire({
@@ -823,14 +781,6 @@ function guardarEdicionUsuario(e) {
             }
         })
         .catch(() => mostrarToastPersonalizado('No se pudo actualizar el usuario', 'error'));
-=======
-                cargarUsuarios(document.getElementById('inputBusquedaUsuarios').value);
-            } else {
-                console.log(data.message || 'No se pudo actualizar el usuario');
-            }
-        })
-        .catch(() => console.log('No se pudo actualizar el usuario'));
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 }
 
 function inicializarDropdownsUsuarios() {
@@ -842,7 +792,6 @@ function inicializarDropdownsUsuarios() {
         if (btn && menu) {
             btn.onclick = function(e) {
                 e.stopPropagation();
-<<<<<<< HEAD
                 const isOpen = menu.classList.contains('show');
 
                 document.querySelectorAll('#tablaUsuarios .dropdown-opciones.show').forEach(m => {
@@ -862,16 +811,11 @@ function inicializarDropdownsUsuarios() {
                 } else {
                     btn.setAttribute('aria-expanded', 'false');
                 }
-=======
-                menu.classList.toggle('show');
-                btn.setAttribute('aria-expanded', menu.classList.contains('show') ? 'true' : 'false');
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
             };
         }
     });
 }
 
-<<<<<<< HEAD
 function cerrarDropdownOpciones() {
     document.querySelectorAll('.dropdown-opciones.show').forEach(m => {
         m.classList.remove('show');
@@ -881,8 +825,6 @@ function cerrarDropdownOpciones() {
     });
 }
 
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 // Cargar usuarios al abrir el modal
 document.addEventListener('DOMContentLoaded', function() {
     const modalUsuarios = document.getElementById('modalListaUsuarios');
@@ -893,15 +835,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-<<<<<<< HEAD
 
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.btn-opciones')) {
             cerrarDropdownOpciones();
         }
     });
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 });
 
 // Exclusión de preguntas de seguridad
@@ -1023,8 +962,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="assets/js/dashboard/core-ui.js"></script>
 <script src="assets/js/dashboard/empleados-actividades.js"></script>
-<<<<<<< HEAD
 <script src="assets/js/dashboard/permisos.js"></script>
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 <script src="assets/js/dashboard/init.js"></script>

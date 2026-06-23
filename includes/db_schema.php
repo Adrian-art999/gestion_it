@@ -76,6 +76,15 @@ if (!function_exists('asegurarColumnasEmpleados')) {
     }
 }
 
+if (!function_exists('asegurarColumnaVisibleActividades')) {
+    function asegurarColumnaVisibleActividades(mysqli $conn): void
+    {
+        if (!columnaExiste($conn, 'actividades', 'visible')) {
+            $conn->query("ALTER TABLE actividades ADD COLUMN visible TINYINT(1) NOT NULL DEFAULT 1 AFTER id_usuario");
+        }
+    }
+}
+
 if (!function_exists('asegurarEstadoActividades')) {
     function asegurarEstadoActividades(mysqli $conn): void
     {

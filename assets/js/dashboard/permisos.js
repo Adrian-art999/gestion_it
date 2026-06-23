@@ -78,6 +78,16 @@
             }
         }
 
+        // Botón "Lista de Personal" en sidebar
+        if (target.closest('[onclick*="modalListaPersonal"]') || target.closest('[data-accion="lista-personal"]')) {
+            if (!tienePermiso('empleados_listar')) {
+                e.preventDefault();
+                e.stopPropagation();
+                mostrarPermisoDenegado();
+                return;
+            }
+        }
+
         // Botón Finalizar Actividad
         if (target.closest('.btn-accion-actividad-finalizar')) {
             if (!tienePermiso('actividades_finalizar')) {
@@ -131,7 +141,7 @@
 
     // ── Modal de gestión de Roles ──────────────────────────────────────
     function abrirModalRoles(usuarioId) {
-        if (!tienePermiso('roles_gestionar')) {
+        if (!tienePermiso('super_admin')) {
             mostrarPermisoDenegado();
             return;
         }
@@ -186,7 +196,7 @@
                     usuarios_eliminar: 'Eliminar Usuarios',
                     reportes_pdf: 'Reportes PDF',
                     bitacora: 'Bitácora',
-                    roles_gestionar: 'Gestionar Roles'
+                    super_admin: 'Super Admin'
                 };
 
                 permisosList.forEach(function (key) {
@@ -201,6 +211,16 @@
                 });
 
                 html += '</div></div>';
+
+                // Campo de contraseña para confirmar los cambios
+                if (!esSuper) {
+                    html += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid #e0e0e0;">'
+                        + '<label style="display:block;font-size:13px;font-weight:500;color:#5f6368;margin-bottom:6px;">Confirma tu contraseña para guardar:</label>'
+                        + '<input type="password" id="swal-admin-password" '
+                        + 'placeholder="Tu contraseña de administrador" '
+                        + 'style="width:100%;padding:10px 14px;border:1px solid #dadce0;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box;">'
+                        + '</div>';
+                }
 
                 Swal.fire({
                     title: 'Permisos de usuario',
@@ -218,8 +238,14 @@
                     width: 520,
                     preConfirm: function () {
                         if (esSuper) return false;
+                        var pass = document.getElementById('swal-admin-password').value;
+                        if (!pass) {
+                            Swal.showValidationMessage('Debes ingresar tu contraseña para confirmar');
+                            return false;
+                        }
                         var formData = new FormData();
                         formData.append('id', user.id);
+                        formData.append('_admin_password', pass);
                         permisosList.forEach(function (key) {
                             var cb = Swal.getPopup().querySelector('input[name="' + key + '"]');
                             formData.append(key, cb && cb.checked ? '1' : '0');

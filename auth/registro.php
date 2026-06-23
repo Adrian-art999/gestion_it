@@ -4,6 +4,8 @@ include '../includes/db.php';
 
 include '../includes/db_schema.php';
 
+require_once '../includes/functions.php';
+
 asegurarColumnasUsuarios($conn);
 
 asegurarTablaRecuperacionUsuarios($conn);
@@ -24,9 +26,9 @@ $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $nombre = trim($_POST['nombre'] ?? '');
+    $nombre = capitalizarNombre($_POST['nombre'] ?? '');
 
-    $apellido = trim($_POST['apellido'] ?? '');
+    $apellido = capitalizarNombre($_POST['apellido'] ?? '');
 
     $gmail = trim($_POST['gmail'] ?? '');
 

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2026 a las 02:39:54
+-- Tiempo de generación: 22-06-2026 a las 23:56:36
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,20 +32,32 @@ CREATE TABLE `actividades` (
   `descripcion` text NOT NULL,
   `area` varchar(100) NOT NULL,
   `estado` enum('En progreso','Finalizada','Cancelada') NOT NULL DEFAULT 'En progreso',
+  `responsables_data` longtext DEFAULT NULL,
   `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_fin` datetime DEFAULT NULL,
   `rango_dias` int(11) DEFAULT NULL,
   `fecha_limite` date DEFAULT NULL,
   `recordatorio_enviado` tinyint(1) DEFAULT 0,
-  `id_usuario` int(11) DEFAULT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO `actividades` (`id`, `descripcion`, `area`, `estado`, `fecha_inicio`, `rango_dias`, `fecha_limite`, `recordatorio_enviado`, `id_usuario`) VALUES
-(104, 'Mantenimiento a servidores', 'Optica', 'Finalizada', '2026-05-16 22:00:00', NULL, NULL, 0, 72),
-(105, 'asdada', 'Presupuesto', 'En progreso', '2026-05-16 22:00:00', NULL, NULL, 0, 72);
+INSERT INTO `actividades` (`id`, `descripcion`, `area`, `estado`, `responsables_data`, `fecha_inicio`, `fecha_fin`, `rango_dias`, `fecha_limite`, `recordatorio_enviado`, `id_usuario`, `visible`) VALUES
+(188, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'En progreso', '[{\"id\":23,\"nombre\":\"Edmundo Oberto\"},{\"id\":42,\"nombre\":\"Daniel Sanchez\"},{\"id\":28,\"nombre\":\"Andreina Medina\"},{\"id\":43,\"nombre\":\"Emmanuel Lujan\"},{\"id\":24,\"nombre\":\"Jorgue Lazaro\"}]', '2026-06-21 20:08:00', NULL, NULL, NULL, 0, 72, 1),
+(189, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'En progreso', '[{\"id\":42,\"nombre\":\"Daniel Sanchez\"},{\"id\":23,\"nombre\":\"Edmundo Oberto\"}]', '2026-06-21 20:08:00', NULL, NULL, NULL, 0, 72, 1),
+(190, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"}]', '2026-06-21 20:08:00', NULL, NULL, NULL, 0, 72, 1),
+(191, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":42,\"nombre\":\"Daniel Sanchez\"}]', '2026-06-21 20:08:00', NULL, NULL, NULL, 0, 72, 1),
+(192, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":30,\"nombre\":\"Gladys Muñoz\"},{\"id\":42,\"nombre\":\"Daniel Sanchez\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(193, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"},{\"id\":30,\"nombre\":\"Gladys Muñoz\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(194, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":42,\"nombre\":\"Daniel Sanchez\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(195, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"},{\"id\":43,\"nombre\":\"Emmanuel Lujan\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(196, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(197, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Informática', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"}]', '2026-06-21 20:09:00', NULL, NULL, NULL, 0, 72, 1),
+(198, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'En progreso', '[{\"id\":28,\"nombre\":\"Andreina Medina\"}]', '2026-06-21 20:36:00', NULL, NULL, NULL, 0, 76, 1);
 
 -- --------------------------------------------------------
 
@@ -58,18 +70,6 @@ CREATE TABLE `actividad_empleado` (
   `actividad_id` int(11) NOT NULL,
   `empleado_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `actividad_empleado`
---
-
-INSERT INTO `actividad_empleado` (`id`, `actividad_id`, `empleado_id`) VALUES
-(5, 104, 24),
-(2, 104, 26),
-(3, 104, 28),
-(4, 104, 30),
-(1, 104, 31),
-(7, 105, 31);
 
 -- --------------------------------------------------------
 
@@ -311,7 +311,82 @@ INSERT INTO `actividad_historial` (`id`, `actividad_id`, `accion`, `detalle`, `u
 (217, 104, 'ACTUALIZACION', 'El usuario Gladys Muñoz actualizó el campo Área, cambió el estado a Finalizada y añadió nuevos responsables', 72, 'Gladys Muñoz', '2026-05-18 04:13:33'),
 (218, 105, 'CREACION', 'Actividad creada por Gladys Muñoz el 17-05-2026', 72, 'Gladys Muñoz', '2026-05-18 05:07:54'),
 (219, 105, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-05-18 05:07:58'),
-(220, 105, 'ACTUALIZACION', 'El usuario Gladys Muñoz actualizó el campo Área y cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-05-18 05:08:07');
+(220, 105, 'ACTUALIZACION', 'El usuario Gladys Muñoz actualizó el campo Área y cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-05-18 05:08:07'),
+(221, 105, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 13:31:08'),
+(222, 104, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 13:31:14'),
+(223, 106, 'CREACION', 'Actividad creada por Gladys Muñoz el 14-06-2026 07:31', 72, 'Gladys Muñoz', '2026-06-14 13:31:24'),
+(224, 106, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 13:31:27'),
+(225, 106, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 13:34:01'),
+(226, 106, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 13:34:03'),
+(227, 106, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:40:00'),
+(228, 107, 'CREACION', 'Actividad creada por Gladys Muñoz el 14-06-2026 07:40', 72, 'Gladys Muñoz', '2026-06-14 07:40:32'),
+(229, 107, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:40:34'),
+(230, 107, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:43:54'),
+(231, 108, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 07:44:05'),
+(232, 108, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:44:15'),
+(233, 108, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:56:16'),
+(234, 109, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 07:56:29'),
+(235, 109, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 07:56:31'),
+(236, 110, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 07:57:42'),
+(237, 110, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:01:46'),
+(238, 110, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:01:55'),
+(239, 111, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 08:05:47'),
+(240, 111, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:05:52'),
+(241, 110, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:12:52'),
+(242, 110, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:13:01'),
+(243, 110, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:34:10'),
+(244, 110, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:34:18'),
+(245, 110, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:46:16'),
+(246, 109, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:46:26'),
+(247, 110, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:46:29'),
+(248, 112, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 08:46:37'),
+(249, 112, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:46:39'),
+(250, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:46:45'),
+(251, 112, 'ACTUALIZACION', 'El usuario jose ventura añadió un nuevo responsable', 74, 'jose ventura', '2026-06-14 08:49:00'),
+(252, 112, 'FINALIZACION', 'El usuario jose ventura finalizó la actividad', 74, 'jose ventura', '2026-06-14 08:49:07'),
+(253, 112, 'ACTUALIZACION', 'El usuario jose ventura actualizó la actividad', 74, 'jose ventura', '2026-06-14 08:49:19'),
+(254, 112, 'ACTUALIZACION', 'El usuario jose ventura actualizó la actividad', 74, 'jose ventura', '2026-06-14 08:49:32'),
+(255, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:49:43'),
+(256, 113, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 08:51:18'),
+(257, 113, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:51:32'),
+(258, 112, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 08:51:34'),
+(259, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 08:51:42'),
+(260, 112, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:12:27'),
+(261, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 09:12:53'),
+(262, 112, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:24:17'),
+(263, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz actualizó la descripción, actualizó el campo Área y actualizó los responsables', 72, 'Gladys Muñoz', '2026-06-14 09:25:09'),
+(264, 112, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-14 09:25:52'),
+(265, 112, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:25:53'),
+(266, 114, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-14 09:26:28'),
+(267, 114, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:30:34'),
+(268, 114, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:30:38'),
+(269, 112, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-14 09:30:42'),
+(270, 115, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-15 17:54:26'),
+(271, 115, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-16 17:58:18'),
+(272, 115, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2027-06-16 17:58:49'),
+(273, 115, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-15 17:59:12'),
+(274, 115, 'ACTUALIZACION', 'El usuario Gladys Muñoz cambió el estado a En progreso', 72, 'Gladys Muñoz', '2026-06-15 17:59:54'),
+(275, 115, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-07-31 18:00:05'),
+(276, 115, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-15 12:00:48'),
+(277, 116, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-15 12:32:08'),
+(278, 117, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-15 12:36:26'),
+(279, 187, 'ACTUALIZACION', 'El usuario jose ventura actualizó la actividad', 74, 'jose ventura', '2026-06-21 06:49:33'),
+(280, 147, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-20 22:59:01'),
+(281, 146, 'ELIMINACION', 'El usuario Gladys Muñoz eliminó la actividad', 72, 'Gladys Muñoz', '2026-06-20 23:50:12'),
+(282, 117, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-20 23:59:35'),
+(283, 187, 'ACTUALIZACION', 'El usuario Gladys Muñoz actualizó la actividad', 72, 'Gladys Muñoz', '2026-06-21 00:20:44'),
+(284, 187, 'FINALIZACION', 'El usuario Gladys Muñoz finalizó la actividad', 72, 'Gladys Muñoz', '2026-06-21 09:57:12'),
+(285, 188, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:08:32'),
+(286, 189, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:08:44'),
+(287, 190, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:08:49'),
+(288, 191, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:08:54'),
+(289, 192, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:02'),
+(290, 193, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:09'),
+(291, 194, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:15'),
+(292, 195, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:22'),
+(293, 196, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:28'),
+(294, 197, 'CREACION', 'Actividad creada por Gladys Muñoz', 72, 'Gladys Muñoz', '2026-06-21 16:09:32'),
+(295, 198, 'CREACION', 'Actividad creada por Jose Ventura', 76, 'Jose Ventura', '2026-06-21 16:36:27');
 
 -- --------------------------------------------------------
 
@@ -342,7 +417,45 @@ INSERT INTO `empleados` (`id`, `nombre`, `apellido`, `formacion`, `correo`, `tel
 (28, 'Andreina', 'Medina', 'Informatica y Sistemas', '', ''),
 (29, 'Julio', 'Acosta', 'Informatica y Sistemas', '', ''),
 (30, 'Gladys', 'Muñoz', 'Informatica y Sistemas', '', ''),
-(31, 'Daniel', 'Sanchez', 'Informatica y Sistemas', '', '');
+(42, 'Daniel', 'Sanchez', 'Ing. Sistemas', 'N/D', 'N/D');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `logs_sistema`
+--
+
+CREATE TABLE `logs_sistema` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `accion` text NOT NULL,
+  `detalle` text DEFAULT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `logs_sistema`
+--
+
+INSERT INTO `logs_sistema` (`id`, `usuario_id`, `accion`, `detalle`, `fecha`) VALUES
+(1, 72, 'Registró la actividad ID 188... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":188,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(2, 72, 'Registró la actividad ID 189... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":189,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(3, 72, 'Registró la actividad ID 190... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":190,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(4, 72, 'Registró la actividad ID 191... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":191,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(5, 72, 'Registró la actividad ID 192... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":192,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(6, 72, 'Registró la actividad ID 193... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":193,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(7, 72, 'Registró la actividad ID 194... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":194,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(8, 72, 'Registró la actividad ID 195... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":195,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(9, 72, 'Registró la actividad ID 196... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":196,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(10, 72, 'Registró la actividad ID 197... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":197,\"descripcion\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"area\":\"Informática\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(11, 72, 'Generó reporte PDF', '{\"fecha_inicio\":\"2026-06-21\",\"fecha_fin\":\"2026-06-21\",\"total\":10}', '2026-06-21'),
+(12, 72, 'Eliminó al usuario ID 75... (Ver info)', '{\"tipo\":\"usuario\",\"accion\":\"eliminacion\",\"usuario_id\":75,\"nombre\":\"Jose Ventura\"}', '2026-06-21'),
+(13, 72, 'Eliminó al empleado ID 43... (Ver info)', '{\"tipo\":\"empleado\",\"accion\":\"eliminacion\",\"empleado_id\":43,\"nombre\":\"Emmanuel\",\"apellido\":\"Lujan\",\"formacion\":\"Ing. Sistemas\",\"correo\":\"N\\/D\",\"telefono\":\"N\\/D\"}', '2026-06-21'),
+(14, 72, 'Registró al usuario ID 76... (Ver info)', '{\"tipo\":\"usuario\",\"accion\":\"registro\",\"nombre\":\"Jose Ventura\",\"username\":\"jose\",\"formacion\":\"\",\"correo\":\"\"}', '2026-06-21'),
+(15, 76, 'Registró la actividad ID 198... (Ver info)', '{\"tipo\":\"actividad\",\"accion\":\"creacion\",\"actividad_id\":198,\"descripcion\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"area\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"estado\":\"En progreso\"}', '2026-06-21'),
+(16, 72, 'Generó reporte PDF', '{\"fecha_inicio\":\"2026-06-21\",\"fecha_fin\":\"2026-06-21\",\"total\":11}', '2026-06-21'),
+(17, 72, 'Registró al empleado ID 45... (Ver info)', '{\"tipo\":\"empleado\",\"accion\":\"registro\",\"nombre\":\"Emmanuel\",\"apellido\":\"Lujan\",\"formacion\":\"Ing. Sistemas\",\"correo\":\"N\\/D\",\"telefono\":\"N\\/D\"}', '2026-06-22'),
+(18, 72, 'Eliminó al empleado ID 45... (Ver info)', '{\"tipo\":\"empleado\",\"accion\":\"eliminacion\",\"empleado_id\":45,\"nombre\":\"Emmanuel\",\"apellido\":\"Lujan\",\"formacion\":\"Ing. Sistemas\",\"correo\":\"N\\/D\",\"telefono\":\"N\\/D\"}', '2026-06-22');
 
 -- --------------------------------------------------------
 
@@ -365,16 +478,17 @@ CREATE TABLE `usuarios` (
   `respuesta_2_hash` char(64) DEFAULT NULL,
   `pregunta_3` varchar(80) DEFAULT NULL,
   `respuesta_3_hash` char(64) DEFAULT NULL,
-  `recuperacion_actualizado_en` datetime DEFAULT NULL
+  `recuperacion_actualizado_en` datetime DEFAULT NULL,
+  `permisos` text DEFAULT NULL COMMENT 'JSON permisos granulares'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre_completo`, `formacion`, `password`, `correo`, `username`, `telefono`, `rol`, `pregunta_1`, `respuesta_1_hash`, `pregunta_2`, `respuesta_2_hash`, `pregunta_3`, `respuesta_3_hash`, `recuperacion_actualizado_en`) VALUES
-(72, 'Gladys Muñoz', 'Informatica y Sistemas', '$2y$10$0pY8Vrc.Pxznj1yvVAb5b.myQFRf8WJtQB9MUSXYUQv4aRvX/qdBu', 'gladys1@gmail.com', 'gladys', '', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(73, 'José Ventura', 'Informatica y Sistemas', '$2y$10$9/9FM4rST9rSLMup1AThaOYnvfs2jBFHuprEghicPtejyZtPeSo1K', '', 'jose', '', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `usuarios` (`id`, `nombre_completo`, `formacion`, `password`, `correo`, `username`, `telefono`, `rol`, `pregunta_1`, `respuesta_1_hash`, `pregunta_2`, `respuesta_2_hash`, `pregunta_3`, `respuesta_3_hash`, `recuperacion_actualizado_en`, `permisos`) VALUES
+(72, 'Gladys Muñoz', 'Informatica y Sistemas', '$2y$10$0pY8Vrc.Pxznj1yvVAb5b.myQFRf8WJtQB9MUSXYUQv4aRvX/qdBu', 'gladys1@gmail.com', 'gladys', '', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"actividades_editar\":true,\"actividades_eliminar\":true,\"actividades_finalizar\":true,\"actividades_info\":true,\"empleados_listar\":true,\"empleados_registrar\":true,\"empleados_editar\":true,\"empleados_eliminar\":true,\"empleados_info\":true,\"usuarios_listar\":true,\"usuarios_registrar\":true,\"usuarios_editar\":true,\"usuarios_eliminar\":true,\"reportes_pdf\":true,\"bitacora\":true,\"roles_gestionar\":true}'),
+(76, 'Jose Ventura', '', '$2y$10$X6TzTTI39sYBmZrajfg09ePlrAY5AbnO1I2Do7womzmwB6hRb1XvC', '', 'jose', '', 'tecnico', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"actividades_editar\":true,\"actividades_eliminar\":false,\"actividades_finalizar\":true,\"actividades_info\":true,\"empleados_listar\":true,\"empleados_registrar\":false,\"empleados_editar\":false,\"empleados_eliminar\":false,\"empleados_info\":false,\"usuarios_listar\":false,\"usuarios_registrar\":false,\"usuarios_editar\":false,\"usuarios_eliminar\":true,\"reportes_pdf\":false,\"bitacora\":false,\"super_admin\":false}');
 
 -- --------------------------------------------------------
 
@@ -399,7 +513,7 @@ CREATE TABLE `usuario_recuperacion` (
 
 INSERT INTO `usuario_recuperacion` (`usuario_id`, `pregunta_1`, `respuesta_1_hash`, `pregunta_2`, `respuesta_2_hash`, `pregunta_3`, `respuesta_3_hash`, `actualizado_en`) VALUES
 (72, 'mascota', '297581d6cd198a6e6df740f13288cb13a1e76cebe3f0ebc3fe259977addfd646', 'pelicula', '8c2a25260209b2db50e9d7c369876ddeeaebde2472a38426ca4907fbe4135921', 'comida', 'a4c18ee0ada59e343691ef4ddc0e502b86679f2eaa6a5576a0ec3c9ea0658e36', '2026-05-15 00:24:20'),
-(73, 'mascota', '52032260ad6b5f6d43ff16181fb5e28baffb7ba8f1a8f377f79b05998c4e2d6b', 'comida', '8c2a25260209b2db50e9d7c369876ddeeaebde2472a38426ca4907fbe4135921', 'pelicula', '9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e', '2026-05-18 05:08:42');
+(76, 'mascota', '52032260ad6b5f6d43ff16181fb5e28baffb7ba8f1a8f377f79b05998c4e2d6b', 'pelicula', '8c2a25260209b2db50e9d7c369876ddeeaebde2472a38426ca4907fbe4135921', 'comida', 'a4c18ee0ada59e343691ef4ddc0e502b86679f2eaa6a5576a0ec3c9ea0658e36', '2026-06-21 16:35:15');
 
 --
 -- Índices para tablas volcadas
@@ -436,6 +550,14 @@ ALTER TABLE `empleados`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `logs_sistema`
+--
+ALTER TABLE `logs_sistema`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_logs_fecha` (`fecha`),
+  ADD KEY `idx_logs_usuario` (`usuario_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -457,7 +579,7 @@ ALTER TABLE `usuario_recuperacion`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT de la tabla `actividad_empleado`
@@ -469,19 +591,25 @@ ALTER TABLE `actividad_empleado`
 -- AUTO_INCREMENT de la tabla `actividad_historial`
 --
 ALTER TABLE `actividad_historial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=296;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT de la tabla `logs_sistema`
+--
+ALTER TABLE `logs_sistema`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- Restricciones para tablas volcadas
@@ -499,6 +627,12 @@ ALTER TABLE `actividades`
 ALTER TABLE `actividad_empleado`
   ADD CONSTRAINT `fk_ae_actividad` FOREIGN KEY (`actividad_id`) REFERENCES `actividades` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_ae_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleados` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `logs_sistema`
+--
+ALTER TABLE `logs_sistema`
+  ADD CONSTRAINT `fk_logs_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_recuperacion`

@@ -4,6 +4,7 @@
  *
  * Almacena los permisos en $_SESSION['permisos'] como un array asociativo.
  * Superadmin (Gladys) tiene todos los permisos en true siempre.
+ * El permiso 'super_admin' concede control total absoluto sobre el sistema.
  */
 
 if (!function_exists('listaPermisos')) {
@@ -28,7 +29,7 @@ if (!function_exists('listaPermisos')) {
             'usuarios_eliminar',
             'reportes_pdf',
             'bitacora',
-            'roles_gestionar',
+            'super_admin',
         ];
     }
 }
@@ -63,7 +64,7 @@ if (!function_exists('permisosDefault')) {
             'usuarios_eliminar'    => false,
             'reportes_pdf'         => false,
             'bitacora'             => false,
-            'roles_gestionar'      => false,
+            'super_admin'          => false,
         ];
     }
 }
@@ -134,10 +135,20 @@ if (!function_exists('cargarPermisosEnSesion')) {
             if ($row && !empty($row['permisos'])) {
                 $decoded = json_decode($row['permisos'], true);
                 if (is_array($decoded)) {
+                    // Migración: mapear roles_gestionar antiguo → super_admin
+                    if (isset($decoded['roles_gestionar'])) {
+                        $decoded['super_admin'] = $decoded['roles_gestionar'];
+                        unset($decoded['roles_gestionar']);
+                    }
                     $permisos = array_merge($permisos, $decoded);
                 }
             }
             $stmt->close();
+        }
+
+        // Si tiene el permiso super_admin, activar bypass total
+        if (!empty($permisos['super_admin'])) {
+            $_SESSION['es_superadmin'] = true;
         }
 
         $_SESSION['permisos'] = $permisos;
@@ -147,7 +158,7 @@ if (!function_exists('cargarPermisosEnSesion')) {
 if (!function_exists('tienePermiso')) {
     /**
      * Verifica si el usuario en sesión tiene un permiso específico.
-     * Superadmin (Gladys) siempre tiene true.
+     * Superadmin (Gladys) o poseedor del permiso 'super_admin' siempre tiene true.
      */
     function tienePermiso(string $permiso): bool
     {

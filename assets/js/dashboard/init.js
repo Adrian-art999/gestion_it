@@ -116,13 +116,9 @@
                     botonActividadInfo.dataset.fechaRegistro || 'N/D',
                     botonActividadInfo.dataset.usuarioRegistro || 'N/D',
                     botonActividadInfo.dataset.descripcion || '',
-<<<<<<< HEAD
                     botonActividadInfo.dataset.actId || '',
                     botonActividadInfo.dataset.duracion || '—',
                     botonActividadInfo.dataset.fechaFin || ''
-=======
-                    botonActividadInfo.dataset.actId || ''
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
                 );
             }
 

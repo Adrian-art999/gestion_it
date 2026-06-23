@@ -4,11 +4,8 @@ declare(strict_types=1);
 session_start();
 require_once '../includes/db.php';
 require_once '../includes/activity_history.php';
-<<<<<<< HEAD
-require_once '../includes/functions.php';
 require_once '../includes/permisos.php';
-=======
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+require_once '../includes/functions.php';
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
@@ -29,7 +26,6 @@ if ($id <= 0) {
     exit;
 }
 
-<<<<<<< HEAD
 if (!tienePermiso('actividades_finalizar')) {
     http_response_code(403);
     echo "No tienes permiso para esta acción";
@@ -42,10 +38,6 @@ $ahora_fin = date('Y-m-d H:i:s');
 $sql = "UPDATE actividades
         SET estado = 'Finalizada',
             fecha_fin = ?
-=======
-$sql = "UPDATE actividades
-        SET estado = 'Finalizada'
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
         WHERE id = ? AND estado = 'En progreso'
         LIMIT 1";
 $stmt = $conn->prepare($sql);
@@ -54,11 +46,7 @@ if (!$stmt) {
     echo "Error SQL: " . $conn->error;
     exit;
 }
-<<<<<<< HEAD
 $stmt->bind_param('si', $ahora_fin, $id);
-=======
-$stmt->bind_param('i', $id);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
 if (!$stmt->execute()) {
     http_response_code(500);
     echo "Error SQL: " . $stmt->error;
@@ -70,16 +58,17 @@ if ($stmt->affected_rows <= 0) {
     exit;
 }
 
-<<<<<<< HEAD
 $_SESSION['toast'] = ['tipo' => 'success', 'mensaje' => '¡Actividad finalizada correctamente!'];
 
 $usuarioNombre = (string) ($_SESSION['nombre'] ?? 'Sistema');
 $usuarioId = (int) ($_SESSION['user_id'] ?? 0);
-registrar_log($conn, $usuarioId, "Finalizó la actividad ID {$id}");
-=======
-$usuarioNombre = (string) ($_SESSION['nombre'] ?? 'Sistema');
-$usuarioId = (int) ($_SESSION['user_id'] ?? 0);
->>>>>>> 2f72d4b40d0d173209acf2d06dc5345c872ff938
+$detalleLog = json_encode([
+    'tipo' => 'actividad',
+    'accion' => 'finalizacion',
+    'actividad_id' => $id,
+    'fecha_fin' => $ahora_fin
+], JSON_UNESCAPED_UNICODE);
+registrar_log($conn, $usuarioId, "Finalizó la actividad ID {$id}... (Ver info)", $detalleLog);
 registrarHistorialActividad(
     $conn,
     $id,
