@@ -50,92 +50,226 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
         body {
             font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #f5f7fa;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
-        .login-box {
+
+        /* ══ Split‑screen layout ══ */
+        .login-wrapper {
+            display: flex;
+            width: 960px;
+            max-width: 96vw;
+            min-height: 560px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.08);
             background: #fff;
-            padding: 36px 32px 28px;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(60,64,67,0.13);
-            width: 400px;
-            text-align: center;
         }
-        .logo {
-            font-size: 22px;
-            color: #1a73e8;
-            font-weight: 700;
-            margin-bottom: 22px;
+
+        /* ── Panel Izquierdo (gradiente animado) ── */
+        .panel-visual {
+            flex: 0 0 420px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 44px 36px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .panel-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 30% 20%, rgba(99,102,241,0.15), transparent 70%);
+            pointer-events: none;
+        }
+        @keyframes gradientShift {
+            0%   { background-position: 0% 0%; }
+            50%  { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .visual-content { position: relative; z-index: 1; }
+        .visual-logo {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            width: 56px; height: 56px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            margin-bottom: 28px;
         }
-        .logo .material-icons { font-size: 28px; }
-        h2 { color: #202124; margin-bottom: 20px; font-size: 20px; font-weight: 500; }
+        .visual-logo .material-icons { font-size: 28px; color: #818cf8; }
+        .panel-visual h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+        .visual-sub {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+        .visual-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .vf-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .vf-item .material-icons {
+            font-size: 20px;
+            color: #6366f1;
+            flex-shrink: 0;
+        }
+        .visual-footer {
+            font-size: 12px;
+            color: #64748b;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Panel Derecho (formulario) ── */
+        .panel-form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 48px;
+            background: #fff;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 360px;
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .form-header-icon {
+            font-size: 36px !important;
+            color: #6366f1;
+            margin-bottom: 8px;
+        }
+        .form-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .form-header p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* ── Input groups ── */
+        .input-group { margin-bottom: 18px; }
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
         .input-wrapper {
             position: relative;
-            margin: 8px 0;
         }
         .input-wrapper .material-icons {
             position: absolute;
             left: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: #5f6368;
+            color: #94a3b8;
             font-size: 20px;
+            pointer-events: none;
         }
-        input[type=text], input[type=password] {
+        .input-wrapper input {
             width: 100%;
             padding: 12px 14px 12px 44px;
-            margin: 0;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
             outline: none;
-            font-size: 15px;
-            transition: border-color .2s;
+            transition: border-color .2s, box-shadow .2s;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+        .input-wrapper input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
             background: #fff;
         }
-        input:focus { border-color: #1a73e8; border-width: 2px; }
-        .btn-primary {
+        .input-wrapper input::placeholder { color: #94a3b8; }
+
+        /* ── Botón submit ── */
+        .btn-login {
             width: 100%;
-            padding: 12px;
-            background: #1a73e8;
+            padding: 13px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 14px;
             font-size: 15px;
-            transition: background .2s;
+            letter-spacing: 0.3px;
+            transition: opacity .2s, transform .15s;
         }
-        .btn-primary:hover { background: #1557b0; }
+        .btn-login:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-login:active { transform: translateY(0); }
+
+        /* ── Error message ── */
         .error-msg {
-            color: #d93025;
-            background: #fce8e6;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
             padding: 10px 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 13px;
-            margin-bottom: 14px;
+            margin-bottom: 18px;
             text-align: left;
             display: <?php echo $error ? 'block' : 'none'; ?>;
         }
+
+        /* ── Link recuperar ── */
         .link-recover {
+            display: block;
             background: none;
             border: none;
-            color: #1a73e8;
+            color: #6366f1;
             cursor: pointer;
             font-size: 13px;
-            margin-top: 14px;
-            text-decoration: underline;
+            margin-top: 16px;
+            text-decoration: none;
+            text-align: center;
+            transition: color .2s;
         }
-        .footer-note { margin-top: 20px; font-size: 12px; color: #9aa0a6; }
+        .link-recover:hover { color: #4f46e5; text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 820px) {
+            .panel-visual { display: none; }
+            .panel-form { padding: 32px 24px; }
+            .login-wrapper { min-height: auto; max-width: 440px; }
+        }
 
         /* ── Modal de recuperación ── */
         .rec-overlay {
@@ -162,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .rec-box h3 {
             font-size: 17px;
             font-weight: 600;
-            color: #1a73e8;
+            color: #6366f1;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -198,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 0;
         }
         .rec-box input[readonly] { background: #f8f9fa; color: #5f6368; font-weight: 500; }
-        .rec-box input:focus:not([readonly]) { border-color: #1a73e8; border-width: 2px; }
+        .rec-box input:focus:not([readonly]) { border-color: #6366f1; border-width: 2px; }
         .rec-msg {
             font-size: 13px;
             padding: 9px 12px;
@@ -215,12 +349,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: flex-end;
         }
         .btn-rec-primary {
-            background: #1a73e8; color: #fff; border: none;
+            background: #6366f1; color: #fff; border: none;
             padding: 10px 20px; border-radius: 8px;
             font-weight: 600; cursor: pointer; font-size: 14px;
             transition: background .2s;
         }
-        .btn-rec-primary:hover { background: #1557b0; }
+        .btn-rec-primary:hover { background: #4f46e5; }
         .btn-rec-secondary {
             background: #f1f3f4; color: #3c4043; border: none;
             padding: 10px 18px; border-radius: 8px;
@@ -466,31 +600,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <div class="login-box">
-        <div class="logo">
-            <span class="material-icons">dns</span> Sistema O.S.T.I
+    <div class="login-wrapper">
+        <!-- ── Panel Visual Izquierdo ── -->
+        <div class="panel-visual">
+            <div class="visual-content">
+                <div class="visual-logo">
+                    <span class="material-icons">dns</span>
+                </div>
+                <h1>Sistema O.S.T.I</h1>
+                <p class="visual-sub">Operaciones, Seguimiento y Trazabilidad de Incidencias</p>
+                <div class="visual-features">
+                    <div class="vf-item">
+                        <span class="material-icons">assignment</span>
+                        <span>Gestión de actividades</span>
+                    </div>
+                    <div class="vf-item">
+                        <span class="material-icons">group</span>
+                        <span>Control de personal</span>
+                    </div>
+                    <div class="vf-item">
+                        <span class="material-icons">picture_as_pdf</span>
+                        <span>Reportes automatizados</span>
+                    </div>
+                    <div class="vf-item">
+                        <span class="material-icons">history</span>
+                        <span>Bitácora del sistema</span>
+                    </div>
+                </div>
+            </div>
+            <div class="visual-footer">© <?php echo date('Y'); ?> Sistema O.S.T.I — Todos los derechos reservados.</div>
         </div>
-        <h2>Acceso al sistema</h2>
 
-        <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
+        <!-- ── Panel Derecho: Formulario ── -->
+        <div class="panel-form">
+            <div class="form-container">
+                <div class="form-header">
+                    <span class="material-icons form-header-icon">dns</span>
+                    <h2>Acceso al sistema</h2>
+                    <p>Ingresa tus credenciales para continuar</p>
+                </div>
 
-        <form method="POST" autocomplete="on">
-            <div class="input-wrapper">
-                <span class="material-icons">person</span>
-                <input type="text"     name="correo" placeholder="Correo o username" required autocomplete="username">
+                <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
+
+                <form method="POST" autocomplete="on">
+                    <div class="input-group">
+                        <label for="loginCorreo">Correo o username</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons">person</span>
+                            <input type="text" id="loginCorreo" name="correo" placeholder="ej: manuel02 o usuario@gmail.com" required autocomplete="username">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPass">Contraseña</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons">lock</span>
+                            <input type="password" id="loginPass" name="pass" placeholder="••••••••" required autocomplete="current-password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-login">Iniciar sesión</button>
+                </form>
+
+                <button type="button" class="link-recover" id="btnAbrirRecuperar">
+                    ¿Olvidaste tu contraseña?
+                </button>
             </div>
-            <div class="input-wrapper">
-                <span class="material-icons">lock</span>
-                <input type="password" name="pass"   placeholder="Contraseña"        required autocomplete="current-password">
-            </div>
-            <button type="submit" class="btn-primary">INICIAR</button>
-        </form>
-
-        <button type="button" class="link-recover" id="btnAbrirRecuperar">
-            ¿Olvidaste tu contraseña?
-        </button>
-
-        <p class="footer-note">Uso exclusivo para personal técnico del departamento.</p>
+        </div>
     </div>
 
     <!-- ══ Modal de recuperación de contraseña ══ -->
@@ -521,7 +695,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Paso 2 -->
             <div class="rec-step" id="recPaso2">
                 <div class="step-label">Paso 2 de 3 — Preguntas de seguridad</div>
-                <p style="font-size:13px;color:#5f6368;margin-bottom:8px;"> respuestas deben ser correctas para continuar.</p>
+                <p style="font-size:13px;color:#5f6368;margin-bottom:8px;">Las respuestas deben ser correctas para continuar.</p>
 
                 <label>Pregunta 1</label>
                 <input type="text" id="pregunta1Label" readonly>
